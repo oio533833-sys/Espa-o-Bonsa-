@@ -1,3 +1,7 @@
+// ===============================
+// SEGURANÇA DO PAINEL
+// ===============================
+
 let autorizado = localStorage.getItem("espacoBonsai");
 
 
@@ -9,7 +13,10 @@ if(autorizado !== "sim"){
 
 
 
-// Dados salvos
+// ===============================
+// CARREGAR DADOS
+// ===============================
+
 
 let reservas = JSON.parse(
     localStorage.getItem("reservasBonsai")
@@ -32,13 +39,15 @@ mostrarDatas();
 
 
 
+// ===============================
+// MOSTRAR RESERVAS
+// ===============================
+
 
 function mostrarReservas(){
 
 
-let area = document.getElementById(
-"reservas"
-);
+let area = document.getElementById("reservas");
 
 
 area.innerHTML = "";
@@ -49,17 +58,16 @@ if(reservas.length === 0){
 
 
 area.innerHTML =
-"<p>Sem pedidos de reserva.</p>";
+"<p>Nenhuma reserva recebida.</p>";
 
 return;
-
 
 }
 
 
 
 
-reservas.forEach((item)=>{
+reservas.forEach(reserva=>{
 
 
 let div = document.createElement("div");
@@ -69,62 +77,84 @@ div.className="reserva-card";
 
 
 
-div.innerHTML =
+let status = reserva.status;
 
-`
+
+
+div.innerHTML = `
+
 
 <h3>
-🟡 Pedido de reserva
+
+${
+status === "aguardando"
+
+?
+
+"🟡 Nova solicitação"
+
+:
+
+status === "confirmada"
+
+?
+
+"🔴 Confirmada"
+
+:
+
+"⚪ Recusada"
+
+}
+
 </h3>
 
 
-<p>
-👤 ${item.nome}
-</p>
+<p>👤 ${reserva.nome}</p>
 
+<p>📱 ${reserva.whatsapp}</p>
 
-<p>
-📱 ${item.whatsapp}
-</p>
+<p>👥 ${reserva.pessoas} pessoas</p>
 
+<p>📅 ${reserva.inicio} até ${reserva.fim}</p>
 
-<p>
-📅 ${item.inicio} até ${item.fim}
-</p>
+<p>🍲 Rechaud: ${reserva.rechaud}</p>
 
-
-<p>
-👥 ${item.pessoas} pessoas
-</p>
-
-
-<p>
-🔥 Rechaud: ${item.rechaud}
-</p>
-
-
-<p>
-🎂 Aniversário: ${item.aniversario}
-</p>
+<p>🎂 Aniversário: ${reserva.aniversario}</p>
 
 
 
-<button onclick="aceitarReserva(${item.id})">
+${
+status === "aguardando"
+
+?
+
+`
+
+<button onclick="aceitarReserva(${reserva.id})">
 
 ✅ Aceitar
 
 </button>
 
 
-
-<button onclick="recusarReserva(${item.id})">
+<button onclick="recusarReserva(${reserva.id})">
 
 ❌ Recusar
 
 </button>
 
+`
+
+:
+
+""
+
+}
+
 
 `;
+
 
 
 area.appendChild(div);
@@ -143,20 +173,23 @@ area.appendChild(div);
 
 
 
+// ===============================
+// ACEITAR RESERVA
+// ===============================
+
 
 function aceitarReserva(id){
 
 
-
 let reserva = reservas.find(
 
-item => item.id === id
+r => r.id === id
 
 );
 
 
 
-if(!reserva) return;
+if(!reserva)return;
 
 
 
@@ -172,9 +205,10 @@ data:
 reserva.inicio + " até " + reserva.fim,
 
 motivo:
-"Reserva confirmada",
+"Reserva de cliente",
 
-status:"ocupado"
+status:
+"ocupado"
 
 });
 
@@ -182,7 +216,8 @@ status:"ocupado"
 
 
 
-salvarDados();
+salvar();
+
 
 
 mostrarReservas();
@@ -192,7 +227,7 @@ mostrarDatas();
 
 
 alert(
-"Reserva aceita! 🔴 Data ocupada."
+"Reserva confirmada! 🔴"
 );
 
 
@@ -205,19 +240,37 @@ alert(
 
 
 
+// ===============================
+// RECUSAR RESERVA
+// ===============================
+
+
 function recusarReserva(id){
 
 
 
-reservas = reservas.filter(
-
-item => item.id !== id
-
-);
+reservas = reservas.map(r=>{
 
 
+if(r.id===id){
 
-salvarDados();
+
+r.status="recusada";
+
+
+}
+
+
+return r;
+
+
+});
+
+
+
+
+salvar();
+
 
 
 mostrarReservas();
@@ -239,43 +292,63 @@ alert(
 
 
 
+// ===============================
+// BLOQUEAR DATA MANUAL
+// ===============================
+
+
 function bloquearData(){
 
 
-
 let data = prompt(
-"Digite a data para bloquear:"
+
+"Qual data deseja bloquear?"
+
 );
 
 
 
-if(!data) return;
+if(!data)return;
+
 
 
 
 let motivo = prompt(
-"Motivo do bloqueio:"
+
+"Motivo do bloqueio:\nExemplo: Família"
+
 );
 
 
 
 datasBloqueadas.push({
 
+
 data:data,
 
+
 motivo:
+
 motivo || "Uso próprio",
 
+
 status:"ocupado"
+
 
 });
 
 
 
-salvarDados();
+salvar();
 
 
 mostrarDatas();
+
+
+
+alert(
+"Data bloqueada 🔴"
+);
 
 
 
@@ -285,6 +358,10 @@ mostrarDatas();
 
 
 
+
+// ===============================
+// MOSTRAR DATAS
+// ===============================
 
 
 function mostrarDatas(){
@@ -297,6 +374,10 @@ let area = document.getElementById(
 
 
 
+if(!area)return;
+
+
+
 area.innerHTML="";
 
 
@@ -305,7 +386,8 @@ if(datasBloqueadas.length===0){
 
 
 area.innerHTML=
-"<p>⚪ Nenhuma data ocupada</p>";
+
+"<p>⚪ Nenhuma data ocupada.</p>";
 
 return;
 
@@ -321,6 +403,9 @@ datasBloqueadas.forEach(item=>{
 let div=document.createElement("div");
 
 
+div.className="data-bloqueada";
+
+
 div.innerHTML=
 
 `
@@ -330,12 +415,11 @@ div.innerHTML=
 </p>
 
 <p>
-Motivo: ${item.motivo}
+${item.motivo}
 </p>
 
-<hr>
-
 `;
+
 
 
 area.appendChild(div);
@@ -354,7 +438,12 @@ area.appendChild(div);
 
 
 
-function salvarDados(){
+// ===============================
+// SALVAR
+// ===============================
+
+
+function salvar(){
 
 
 localStorage.setItem(
@@ -385,12 +474,18 @@ JSON.stringify(datasBloqueadas)
 
 
 
+// ===============================
+// SAIR
+// ===============================
+
+
 function sairAdmin(){
 
 
 localStorage.removeItem(
 "espacoBonsai"
 );
+
 
 
 window.location.href="index.html";
