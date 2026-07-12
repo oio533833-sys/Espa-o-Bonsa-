@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reserva - Espaço Bonsai</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<header>
+
+<h1>
+🌿 Fazer Reserva
+</h1>
+
+<p>
+Espaço Bonsai
+</p>
+
+</header>
+
+
+
+
+<div class="card reserva-card">
+
+
+<label>
+Nome completo
+</label>
+
+<input 
+type="text"
+id="nome"
+placeholder="Digite seu nome">
+
+
+
+<label>
+Seu WhatsApp
+</label>
+
+<input 
+type="tel"
+id="whatsapp"
+placeholder="(00) 00000-0000">
+
+
+
+<label>
+Quantidade de pessoas
+</label>
+
+<input 
+type="number"
+id="pessoas"
+placeholder="Ex: 50">
+
+
+
+<label>
+Data de entrada
+</label>
+
+<input 
+type="date"
+id="inicio">
+
+
+
+<label>
+Data de saída
+</label>
+
+<input 
+type="date"
+id="fim">
+
+
+
+
+
+<label>
+Possui rechaud?
+</label>
+
+<select id="rechaud">
+
+<option>
+Não
+</option>
+
+<option>
+Sim
+</option>
+
+</select>
+
+
+
+
+
+<label>
+É festa de aniversário?
+</label>
+
+<select id="aniversario">
+
+<option>
+Não
+</option>
+
+<option>
+Sim
+</option>
+
+</select>
+
+
+
+
+
+<button 
+class="reservar"
+onclick="enviarReserva()">
+
+Enviar Reserva
+
+</button>
+
+
+
+
+<p id="mensagem">
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+<script src="reserva.js"></script>
+
+
+</body>
+
+</html>
