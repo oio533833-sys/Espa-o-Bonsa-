@@ -1,0 +1,18 @@
+{
+  "name": "Espaço Bonsai",
+  "short_name": "Bonsai",
+  "description": "Sistema de reservas do Espaço Bonsai",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f3f7f1",
+  "theme_color": "#176b3a",
+  "orientation": "portrait",
+
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
