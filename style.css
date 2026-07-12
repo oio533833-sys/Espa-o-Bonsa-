@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+body {
+
+    min-height: 100vh;
+    background: #f3f7f1;
+    color: #1b4332;
+
+}
+
+
+
+.container {
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+/* Cabeçalho */
+
+header {
+
+    background: #176b3a;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+    border-radius: 0 0 35px 35px;
+
+}
+
+
+
+header h1 {
+
+    font-size: 32px;
+    margin-bottom: 15px;
+
+}
+
+
+
+header p {
+
+    font-size: 18px;
+    opacity: 0.9;
+
+}
+
+
+
+/* Área principal */
+
+main {
+
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+
+}
+
+
+
+/* Botão reserva */
+
+.reservar {
+
+    background: #176b3a;
+    color: white;
+
+    border: none;
+
+    padding: 20px 45px;
+
+    font-size: 20px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+    transition: 0.3s;
+
+}
+
+
+
+.reservar:hover {
+
+    transform: scale(1.05);
+
+}
+
+
+
+/* Rodapé */
+
+footer {
+
+    background: white;
+
+    padding: 20px;
+
+    text-align: center;
+
+    border-radius: 35px 35px 0 0;
+
+}
+
+
+
+footer p {
+
+    color: #777;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+/* Botão secreto */
+
+.codigo {
+
+    background: transparent;
+
+    border: none;
+
+    color: #999;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+
+.codigo:hover {
+
+    color: #176b3a;
+
+}
+
+
+
+/* Responsivo celular */
+
+@media(max-width:600px){
+
+
+header h1{
+
+    font-size:26px;
+
+}
+
+
+header p{
+
+    font-size:16px;
+
+}
+
+
+.reservar{
+
+    width:90%;
+
+}
+
+
+}
