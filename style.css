@@ -106,3 +106,38 @@ opacity:1;
     color: white;
 
 }
+.notificacao{
+
+position:fixed;
+
+top:20px;
+
+right:20px;
+
+background:white;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+
+z-index:999;
+
+}
+
+
+
+.notificacao button{
+
+margin-top:10px;
+
+padding:10px 20px;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+}
