@@ -1,13 +1,19 @@
-const CACHE = "espaco-bonsai-v1";
+const CACHE_NAME = "espaco-bonsai-v1";
 
 
 const arquivos = [
+
+"./",
 
 "index.html",
 
 "style.css",
 
 "script.js",
+
+"manifest.json",
+
+"logo.png",
 
 "reserva.html",
 
@@ -17,15 +23,15 @@ const arquivos = [
 
 "admin.js",
 
-"calendario.js",
-
-"manifest.json"
+"calendario.js"
 
 ];
 
 
 
 
+
+// Instalar o aplicativo
 
 self.addEventListener(
 "install",
@@ -34,7 +40,7 @@ evento => {
 
 evento.waitUntil(
 
-caches.open(CACHE)
+caches.open(CACHE_NAME)
 
 .then(cache => {
 
@@ -55,6 +61,8 @@ return cache.addAll(arquivos);
 
 
 
+// Abrir o aplicativo
+
 self.addEventListener(
 "fetch",
 evento => {
@@ -69,6 +77,53 @@ caches.match(evento.request)
 
 
 return resposta || fetch(evento.request);
+
+
+})
+
+
+);
+
+
+});
+
+
+
+
+
+
+
+// Atualizar versão
+
+self.addEventListener(
+"activate",
+evento => {
+
+
+evento.waitUntil(
+
+caches.keys()
+
+.then(chaves => {
+
+
+return Promise.all(
+
+chaves.map(chave => {
+
+
+if(chave !== CACHE_NAME){
+
+
+return caches.delete(chave);
+
+
+}
+
+
+})
+
+);
 
 
 })
